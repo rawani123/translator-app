@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { ArrowLeftRight, Loader2 } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { ArrowLeftRight, Loader2, Moon, Sun } from 'lucide-react';
+import LanguageSelector from "./LanguageSelector";
 
 const languages = [
   { code: "sq-AL", name: "Albanian" },
@@ -52,6 +53,7 @@ const languages = [
   { code: "mg-MG", name: "Malagasy" },
   { code: "ms-MY", name: "Malay" },
   { code: "dv-MV", name: "Maldivian" },
+  { code: "mr-IN", name: "Marathi" },
   { code: "mi-NZ", name: "Maori" },
   { code: "men-SL", name: "Mende" },
   { code: "mt-MT", name: "Maltese" },
@@ -106,6 +108,24 @@ function App() {
   const [selectedLanguageFrom, setSelectedLanguageFrom] = useState("en-GB");
   const [selectedLanguageTo, setSelectedLanguageTo] = useState("hi-IN");
   const [isLoading, setIsLoading] = useState(false);
+  const [theme, setTheme] = useState<'light' | 'dark'>(
+    localStorage.getItem('theme') as 'light' | 'dark' || 'light'
+  );
+
+  useEffect(() => {
+    // Update class on document root element
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    // Save theme preference
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
+  };
 
   const getLanguageCode = (fullCode: string) => {
     // Extract the language part before the hyphen for the API
@@ -158,6 +178,18 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 flex items-center justify-center px-4 py-12">
+      <button
+        onClick={toggleTheme}
+        className="fixed top-4 right-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+        aria-label="Toggle theme"
+      >
+        {theme === 'light' ? (
+          <Moon className="h-5 w-5 text-gray-800 dark:text-white" />
+        ) : (
+          <Sun className="h-5 w-5 text-gray-800 dark:text-white" />
+        )}
+      </button>
+
       <main className="w-full max-w-4xl bg-white dark:bg-gray-800 rounded-xl shadow-2xl overflow-hidden transition-all duration-300 ease-in-out transform hover:scale-[1.02]">
         <div className="p-6 sm:p-10">
           <h1 className="text-4xl font-bold text-center mb-8 text-gray-800 dark:text-white bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">
@@ -166,17 +198,11 @@ function App() {
           
           <div className="space-y-6">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-              <select
+              <LanguageSelector
                 value={selectedLanguageFrom}
-                onChange={(e) => setSelectedLanguageFrom(e.target.value)}
-                className="w-full sm:w-auto flex-1 p-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
-              >
-                {languages.map((lang) => (
-                  <option key={lang.code} value={lang.code}>
-                    {lang.name}
-                  </option>
-                ))}
-              </select>
+                onChange={setSelectedLanguageFrom}
+                languages={languages}
+              />
 
               <button
                 onClick={handleSwapLanguages}
@@ -186,17 +212,11 @@ function App() {
                 <ArrowLeftRight className="h-4 w-4" />
               </button>
 
-              <select
+              <LanguageSelector
                 value={selectedLanguageTo}
-                onChange={(e) => setSelectedLanguageTo(e.target.value)}
-                className="w-full sm:w-auto flex-1 p-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
-              >
-                {languages.map((lang) => (
-                  <option key={lang.code} value={lang.code}>
-                    {lang.name}
-                  </option>
-                ))}
-              </select>
+                onChange={setSelectedLanguageTo}
+                languages={languages}
+              />
             </div>
 
             <div className="grid gap-4 md:grid-cols-2">
