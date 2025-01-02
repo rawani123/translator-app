@@ -1,50 +1,97 @@
-# React + TypeScript + Vite
+# Text Translator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern web application built with React and Vite that allows users to translate text between multiple languages using the MyMemory Translation API.
 
-Currently, two official plugins are available:
+![Text Translator App](screenshot.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- Support for 90+ languages
+- Real-time translation
+- Clean and modern user interface
+- Dark mode support
+- Language swap functionality
+- Responsive design
+- Error handling and loading states
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Technologies Used
 
-- Configure the top-level `parserOptions` property like this:
+- React 18
+- TypeScript
+- Vite
+- Tailwind CSS
+- Lucide React (for icons)
+- MyMemory Translation API
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+- Node.js (version 16 or higher)
+- npm (Node Package Manager)
+
+## Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/rawani123/translator-app.git
+cd text-translator
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+2. Install dependencies:
+```bash
+npm install
 ```
+
+3. Start the development server:
+```bash
+npm run dev
+```
+
+4. Open your browser and visit:
+```
+http://localhost:5173
+```
+
+## Usage
+
+1. Select the source language from the first dropdown menu
+2. Enter the text you want to translate in the input field
+3. Select the target language from the second dropdown menu
+4. Click the "Translate" button to get the translation
+5. Use the swap button (↔️) to quickly switch between languages
+
+## Building for Production
+
+To create a production build:
+
+```bash
+npm run build
+```
+
+The built files will be in the `dist` directory.
+
+To preview the production build:
+
+```bash
+npm run preview
+```
+
+## API Rate Limits
+
+The MyMemory Translation API has the following limits:
+- 1000 words/day for anonymous users
+- 10000 words/day with a registered email
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- MyMemory Translation API for providing the translation service
+- Lucide React for the beautiful icons
+- Tailwind CSS for the styling system
